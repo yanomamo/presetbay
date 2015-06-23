@@ -7,7 +7,6 @@ html(ng-app="scotchTodo")
     script(src="//ajax.googleapis.com/ajax/libs/angularjs/1.0.8/angular.min.js")
     script(src="core.js")
   body(ng-controller="mainController")
-    h1!= message
     .checkbox(ng-repeat="preset in presets")
       input(type="checkbox" ng-click="deleteTodo(preset._id)")
       label  {{ preset.name }}

@@ -102,7 +102,11 @@ app.get('/', function (req, res) {
   res.render('index', { title: 'Hey'});
 });
 
-
+// server ng-view files
+app.get('/templates/:filename', function(req, res){
+  var filename = req.params.filename;
+  res.render("templates/" + filename);
+});
 
 
 

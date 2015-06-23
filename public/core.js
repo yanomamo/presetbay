@@ -1,9 +1,13 @@
 var scotchTodo = angular.module('scotchTodo', [])
 .config( [
-    '$compileProvider',
-    function( $compileProvider )
+    '$compileProvider', '$routeProvider',
+    function( $compileProvider, $routeProvider )
     {   
       $compileProvider.urlSanitizationWhitelist(/^\s*(https?|ftp|mailto|chrome-extension|data):/);
+      $routeProvider.when('/library', {
+        templateUrl: 'templates/library',
+        controller: 'mainController'
+      });
     }
 ]);
 
@@ -19,21 +23,6 @@ function mainController($scope, $http) {
     .error(function(data) {
       console.log('Error: ' + data);
     });
-
-  // when submitting the add form, send the text to the node API
-/*  $scope.createTodo = function() {
-    console.log($scope.formData);
-
-    $http.post('/api/presets', $scope.formData)
-      .success(function(data) {
-        $scope.formData = {}; // clear the form so our user is ready to enter another
-        $scope.presets = data;
-        console.log(data);
-      })
-      .error(function(data) {
-        console.log('Error: ' + data);
-      });
-  };*/
 
   // delete a todo after checking it
   $scope.deleteTodo = function(id) {
@@ -88,5 +77,5 @@ function mainController($scope, $http) {
     }
   };
 
-  document.getElementById('file-upload').addEventListener('change', handleFileSelect, false);
+  //document.getElementById('file-upload').addEventListener('change', handleFileSelect, false);
 }
