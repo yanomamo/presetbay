@@ -1,1 +1,13 @@
-div SUCK A NUT
+.signup-library-view(ng-show='!loggedIn')
+  .section
+    h1 Sign Up
+    input(type='text' placeholder='New username')
+    input(type='text' placeholder='New password')
+    input(type='submit')
+  .section
+    h1 Login
+    input(type='text' placeholder='Username')
+    input(type='text' placeholder='Password')
+    input(type='submit')
+.signup-library-view(ng-show='loggedIn')
+  ng-search(option='searchOption')

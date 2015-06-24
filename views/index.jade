@@ -9,8 +9,8 @@ html(ng-app="scotchTodo")
   body(ng-controller="mainController")
     #app-container
       #container-tabs
-        a.tab(href='#/library') Search
-        .tab Library
-        .tab Upload
-        .tab (_)
+        a.tab(href='#search') Search
+        a.tab(href='#library') Library
+        a.tab(href='#upload') Upload
+        a.tab(href='#settings') (_)
       #view(ng-view)

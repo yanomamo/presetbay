@@ -9,6 +9,9 @@ var less = require('less');
 var fs   = require('fs');
 var path = require('path');
 
+var templates = require('./routes/templates');
+var presets = require('./routes/presets');
+
 // configure the database
 mongoose.connect('mongodb://127.0.0.1/mydb');     // connect to mongoDB database on modulus.io
 
@@ -29,84 +32,9 @@ app.use(bodyParser.json());                                     // parse applica
 app.use(bodyParser.json({ type: 'application/vnd.api+json' })); // parse application/vnd.api+json as json
 app.use(methodOverride());
 
-// define model =================
-var Presets = mongoose.model('Presets', {
-    name: String,
-    fileType : String,
-    fileBase64: String
-    //tags: [String],
-    //downloadCount: Number,
-    //owner: Schema.Types.ObjectId
-});
+app.use('/', templates);
+app.use('/api/presets', presets);
 
 // listen (start app with node server.js) ======================================
 app.listen(8080);
 console.log("App listening on port 8080");
-
-// Router
-
-app.get('/api/presets', function(req, res) {
-
-  // use mongoose to get all todos in the database
-  Presets.find(function(err, preset) {
-
-    // if there is an error retrieving, send the error. nothing after res.send(err) will execute
-    if (err)
-        res.send(err)
-
-    res.json(preset); // return all todos in JSON format
-  });
-});
-
-// create todo and send back all todos after creation
-app.post('/api/presets', function(req, res) {
-
-  // create a todo, information comes from AJAX request from Angular
-  Presets.create({
-    name: req.body.name,
-    fileType : req.body.extension,
-    fileBase64: req.body.file,
-    done : false
-  }, function(err, preset) {
-    if (err)
-      res.send(err);
-
-    // get and return all the todos after you create another
-    Presets.find(function(err, preset) {
-      if (err)
-        res.send(err)
-      res.json(preset);
-    });
-  });
-
-});
-
-// delete a todo
-app.delete('/api/presets/:preset_id', function(req, res) {
-  Presets.remove({
-    _id : req.params.preset_id
-  }, function(err, preset) {
-    if (err)
-      res.send(err);
-
-    // get and return all the todos after you create another
-    Presets.find(function(err, preset) {
-      if (err)
-        res.send(err)
-      res.json(preset);
-    });
-  });
-});
-
-app.get('/', function (req, res) {
-  res.render('index', { title: 'Hey'});
-});
-
-// server ng-view files
-app.get('/templates/:filename', function(req, res){
-  var filename = req.params.filename;
-  res.render("templates/" + filename);
-});
-
-
-

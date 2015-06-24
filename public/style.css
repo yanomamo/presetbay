@@ -24,3 +24,53 @@ body #app-container #view {
   height: 422px;
   width: 100%;
 }
+#search-container {
+  height: 34px;
+  width: 100%;
+  border: black 1px dashed;
+}
+#search-container .search-area {
+  width: 50%;
+  height: 100%;
+  display: inline-block;
+}
+#search-container .search-area .user-search {
+  width: 100%;
+  display: inline-block;
+}
+#search-container .search-area .preset-search {
+  width: 100%;
+  display: inline-block;
+}
+#search-container .search-area .preset-tag {
+  width: 33%;
+  display: inline-block;
+}
+#search-container .search-area .hidden-submit {
+  position: absolute;
+  left: -9999px;
+  width: 1px;
+  height: 1px;
+}
+#search-container select {
+  width: 15%;
+  display: inline-block;
+}
+#search-container .option-select {
+  width: 35%;
+  height: 100%;
+  display: inline-block;
+}
+#search-container .option-select div {
+  width: 33%;
+  display: inline-block;
+}
+.signup-library-view {
+  width: 100%;
+  height: 100%;
+}
+.signup-library-view .section {
+  width: 50%;
+  height: 100%;
+  display: inline-block;
+}

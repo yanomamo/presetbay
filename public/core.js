@@ -7,12 +7,49 @@ var scotchTodo = angular.module('scotchTodo', [])
       $routeProvider.when('/library', {
         templateUrl: 'templates/library',
         controller: 'mainController'
+      }).when('/search', {
+        templateUrl: 'templates/search',
+        controller: 'mainController'
+      }).when('/upload', {
+        templateUrl: 'templates/upload',
+        controller: 'mainController'
+      }).when('/settings', {
+        templateUrl: 'templates/settings',
+        controller: 'mainController'
+      }).otherwise({
+        redirectTo: '/'
       });
     }
 ]);
 
+scotchTodo.directive('ngSearch', function() {
+  return {
+    restrict: 'E',
+    templateUrl: 'directives/searchDirective',
+    replace: true,
+    scope: {
+      option: '=',
+      updateResults: '&' 
+    },
+    link: function(scope) {
+
+      scope.setOption = function (x) {
+        scope.option = x;
+      }
+
+      scope.showOption = function (x) {
+        return (x == scope.option);
+      }
+    }
+  }
+});
+
+// Main controller!
+
 function mainController($scope, $http) {
   $scope.formData = {};
+  $scope.searchOption = 0;
+  $scope.loggedIn = false;
 
   // when landing on the page, get all todos and show them
   $http.get('/api/presets')
@@ -35,6 +72,27 @@ function mainController($scope, $http) {
         console.log('Error: ' + data);
       });
   };
+
+  //UNTESTED
+  $scope.updateResults = function(userName, presetName, tags, fileType) {
+    if (tags && fileType && false) {
+      $http.get('/api/presets/' + tags[0] + '/' + tags[1] + '/' + tags[2])
+        .success(function(data) {
+          $scope.presets = data;
+          console.log(data);
+        })
+        .error(function(data) {
+          console.log('Error: ' + data);
+        });
+    }
+
+    console.log(userName);
+    console.log(presetName);
+    console.log(tags);
+    console.log(fileType);
+
+    console.log('searching!!');
+  }
 
   var handleFileSelect = function(evt) {
     var files = evt.target.files;
@@ -77,5 +135,6 @@ function mainController($scope, $http) {
     }
   };
 
+  //identifies upload button
   //document.getElementById('file-upload').addEventListener('change', handleFileSelect, false);
 }
