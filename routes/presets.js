@@ -44,8 +44,7 @@ router.post('/', function(req, res) {
   Presets.create({
     name: req.body.name,
     fileType : req.body.extension,
-    fileBase64: req.body.file,
-    done : false
+    fileBase64: req.body.file
   }, function(err, preset) {
     if (err)
       res.send(err);

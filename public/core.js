@@ -45,13 +45,24 @@ scotchTodo.directive('ngSearch', function() {
 });
 
 // Main controller!
-
 function mainController($scope, $http) {
   $scope.formData = {};
   $scope.searchOption = 0;
-  $scope.loggedIn = false;
+  $scope.user = {};
+
+  // check if the session has a user
+  $http.get('/api/users/sessionUser')
+    .success(function(data) {
+      $scope.user = data;
+      console.log(data);
+    })
+    .error(function(data) {
+      console.log('Error: ' + data);
+    });
+
 
   // when landing on the page, get all todos and show them
+  /*
   $http.get('/api/presets')
     .success(function(data) {
       $scope.presets = data;
@@ -60,6 +71,52 @@ function mainController($scope, $http) {
     .error(function(data) {
       console.log('Error: ' + data);
     });
+  */
+
+  $scope.createUser = function (username, password) {
+    // get user to see if they exist
+    $http.post('/api/users', {
+        username: username,
+        password: password
+      }).success(function(data) {
+        if (data.username) {
+          $scope.user = data;
+        } else {
+          console.log(data.error);
+        }
+      })
+      .error(function(data) {
+        console.log('Error: ' + data);
+      });
+  }
+
+  $scope.login = function (username, password) {
+    $http.post('/api/users/login', {
+      username: username,
+      password: password
+    })
+      .success(function(data) {
+        if (data.username) {
+          $scope.user = data;
+        } else {
+          console.log(data.error);
+        }
+      })
+      .error(function(data) {
+        console.log('Error: ' + data);
+      });
+  }
+
+  $scope.logout = function () {
+    $http.post('/api/users/sessionDelete')
+      .success(function() {
+        $scope.user = {};
+        console.log('logged out!');
+      })
+      .error(function(data) {
+        console.log('Error: ' + data);
+      });
+  }
 
   // delete a todo after checking it
   $scope.deleteTodo = function(id) {

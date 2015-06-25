@@ -1,13 +1,15 @@
-.signup-library-view(ng-show='!loggedIn')
+.signup-library-view(ng-show='!user.username')
   .section
     h1 Sign Up
-    input(type='text' placeholder='New username')
-    input(type='text' placeholder='New password')
-    input(type='submit')
+    form(ng-submit='createUser(formData.newUser, formData.newPassword)')
+      input(type='text' placeholder='New username' ng-model='formData.newUser')
+      input(type='text' placeholder='New password' ng-model='formData.newPassword')
+      input(type='submit')
   .section
     h1 Login
-    input(type='text' placeholder='Username')
-    input(type='text' placeholder='Password')
-    input(type='submit')
-.signup-library-view(ng-show='loggedIn')
+    form(ng-submit='login(formData.user, formData.password)')
+      input(type='text' placeholder='Username' ng-model='formData.user')
+      input(type='text' placeholder='Password' ng-model='formData.password')
+      input(type='submit')
+.signup-library-view(ng-show='user.username')
   ng-search(option='searchOption')

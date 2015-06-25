@@ -8,9 +8,13 @@ var methodOverride = require('method-override'); // simulate DELETE and PUT (exp
 var less = require('less');
 var fs   = require('fs');
 var path = require('path');
+var cookieParser = require('cookie-parser');
+var session = require('express-session');
+var MongoStore = require('connect-mongo')(session);
 
 var templates = require('./routes/templates');
 var presets = require('./routes/presets');
+var users = require('./routes/users');
 
 // configure the database
 mongoose.connect('mongodb://127.0.0.1/mydb');     // connect to mongoDB database on modulus.io
@@ -30,10 +34,18 @@ app.use(morgan('dev'));                                         // log every req
 app.use(bodyParser.urlencoded({'extended':'true'}));            // parse application/x-www-form-urlencoded
 app.use(bodyParser.json());                                     // parse application/json
 app.use(bodyParser.json({ type: 'application/vnd.api+json' })); // parse application/vnd.api+json as json
+app.use(cookieParser());
+app.use(session({
+    secret: 'foo',
+    store: new MongoStore({
+      mongooseConnection: mongoose.connection
+    })
+}));
 app.use(methodOverride());
 
 app.use('/', templates);
 app.use('/api/presets', presets);
+app.use('/api/users', users);
 
 // listen (start app with node server.js) ======================================
 app.listen(8080);
