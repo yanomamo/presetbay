@@ -11,8 +11,7 @@ html(ng-app="scotchTodo")
       #container-tabs
         a.tab(ng-click='goTo("/search")') Search
         a.tab(ng-click='goTo("/library")' ng-show='user.username') Library
-        a.tab(ng-click='goTo("/login")' ng-show='!user.username') Login
+        a.tab(ng-click='goTo("/login")' ng-show='!user.username') Login or Sign Up!
         a.tab(ng-click='goTo("/upload")') Upload
         a.tab(ng-click='goTo("/settings")') (_)
       #view(ng-view)
-    //h1 user: {{user.username}}

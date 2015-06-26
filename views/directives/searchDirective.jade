@@ -1,6 +1,6 @@
 #search-container
   .search-area(ng-show='showOption(0)')
-    form(ng-submit='updateResults({userName: userNameInput, fileType: fileTypeSelection})')
+    form(ng-submit='updateResults({userName: userNameInput})')
       input.user-search(type='text' placeholder='Search users' ng-model='userNameInput')
   .search-area(ng-show='showOption(1)')
     form(ng-submit='updateResults({presetName: presetNameInput, fileType: fileTypeSelection})')

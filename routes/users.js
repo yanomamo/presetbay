@@ -10,6 +10,19 @@ var Users = mongoose.model('Users', {
   downloads: [mongoose.Schema.Types.ObjectId]
 });
 
+router.get('/search/:username', function (req, res) {
+  var name = req.params.username;
+
+  Users.find({
+    username: new RegExp(name, "i")
+  }, function(err, users) {
+
+    if (err)
+      res.send(err)
+    res.send(users);
+  });
+});
+
 router.post('/login', function(req, res) {
   Users.findOne({
     username: req.body.username,

@@ -2,7 +2,7 @@ var express = require('express');
 var router = express.Router();
 
 router.get('/', function (req, res) {
-  res.render('index', { title: 'Hey'});
+  res.render('index', { title: 'PresetBay'});
 });
 
 // server ng-view files

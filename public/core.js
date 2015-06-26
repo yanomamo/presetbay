@@ -6,7 +6,6 @@ var scotchTodo = angular.module('scotchTodo', [])
       var getUserInfo = function ($http) {
         return $http.get('/api/users/sessionUser')
           .success(function(data) {
-            console.log(data);
             return data;
           })
           .error(function(data) {
@@ -109,27 +108,6 @@ scotchTodo.controller('mainController',
         });
     };
 
-    //UNTESTED
-    $scope.updateResults = function(userName, presetName, tags, fileType) {
-      if (tags && fileType && false) {
-        $http.get('/api/presets/' + tags[0] + '/' + tags[1] + '/' + tags[2])
-          .success(function(data) {
-            $scope.presets = data;
-            console.log(data);
-          })
-          .error(function(data) {
-            console.log('Error: ' + data);
-          });
-      }
-
-      console.log(userName);
-      console.log(presetName);
-      console.log(tags);
-      console.log(fileType);
-
-      console.log('searching!!');
-    }
-
     var handleFileSelect = function(evt) {
       var files = evt.target.files;
       var paused = true;
@@ -179,6 +157,26 @@ scotchTodo.controller('mainController',
 scotchTodo.controller('searchController',
   function ($scope, $http, userInfo) {
     $scope.$parent.user = userInfo.data;
+    $scope.searchedUsers = [];
+
+    $scope.updateResults = function(userName, presetName, tags, fileType) {
+      if (userName) {
+        $http.get('/api/users/search/' + userName)
+          .success(function(data) {
+            $scope.searchedUsers = data;
+          })
+          .error(function(data) {
+            console.log('Error: ' + data);
+          });
+      }
+
+      console.log(userName);
+      console.log(presetName);
+      console.log(tags);
+      console.log(fileType);
+      console.log('searching!!');
+    }
+
   });
 
 scotchTodo.controller('loginController',
