@@ -9,8 +9,10 @@ html(ng-app="scotchTodo")
   body(ng-controller="mainController")
     #app-container
       #container-tabs
-        a.tab(href='#search') Search
-        a.tab(href='#library') Library
-        a.tab(href='#upload') Upload
-        a.tab(href='#settings') (_)
+        a.tab(ng-click='goTo("/search")') Search
+        a.tab(ng-click='goTo("/library")' ng-show='user.username') Library
+        a.tab(ng-click='goTo("/login")' ng-show='!user.username') Login
+        a.tab(ng-click='goTo("/upload")') Upload
+        a.tab(ng-click='goTo("/settings")') (_)
       #view(ng-view)
+    //h1 user: {{user.username}}

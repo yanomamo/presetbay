@@ -1,0 +1,13 @@
+.signup-library-view
+  .section
+    h1 Sign Up
+    form(ng-submit='createUser(formData.newUser, formData.newPassword)')
+      input(type='text' placeholder='New username' ng-model='formData.newUser')
+      input(type='text' placeholder='New password' ng-model='formData.newPassword')
+      input(type='submit')
+  .section
+    h1 Login
+    form(ng-submit='login(formData.user, formData.password)')
+      input(type='text' placeholder='Username' ng-model='formData.user')
+      input(type='text' placeholder='Password' ng-model='formData.password')
+      input(type='submit')
