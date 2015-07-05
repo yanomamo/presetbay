@@ -1,6 +1,33 @@
-ng-search(option='searchOption' update-results='updateResults(userName, presetName, tags, fileType)')
-#search-viewer
-  .result-container(ng-repeat='user in searchedUsers' ng-show='searchOption == 0')
-    .result {{user.username}} {{user.downloads.length}} {{user.uploads.length}}
-  .result-container(ng-repeat='preset in searchedPresets' ng-show='searchOption != 0')
-    .result {{patch.name}} {{patch.fileType}}
+ng-search(option='searchOption' update-results='updateSearchResults(userName, presetName, tags, fileType)')
+.search-viewer(ng-show='searchOption == 0')
+  table.table.table-striped.table-hover(ng-show='searchedUsers')
+    thead
+      tr
+        th Username
+        th Downloads
+        th Uploads
+    tbody
+      tr.result-container(ng-repeat='user in searchedUsers' ng-show='searchOption == 0' ng-click='goTo("/profile/"+user._id)')
+        td {{user.username}}
+        td {{user.downloads.length}}
+        td {{user.uploads.length}}
+.search-viewer(ng-show='searchOption != 0')
+  table.table.table-striped.table-hover.user-table(ng-show='searchedPresets')
+    thead
+      tr
+        th.name Name
+        th.type Type
+        th.tags Tags
+        th.author Author
+        th.dlC #DL
+        th.dllink DL
+    tbody
+      tr.result-container(ng-repeat='preset in searchedPresets')
+        td.name {{preset.name}}
+        td.type {{preset.fileType}}
+        td.tags {{preset.tags[0]}} {{preset.tags[1]}} {{preset.tags[2]}}
+        td.author(ng-click='goTo("/profile/"+preset.owner)') {{preset.ownerName}}
+        td.dlC {{preset.downloadCount}}
+        td.dllink
+          a.link(download='{{ preset.name }}{{ preset.fileType }}' href="data:nmsv;base64,{{ preset.fileBase64 }}" ng-click='savePresetToUser(preset._id, user._id); preset.downloadCount = preset.downloadCount + 1')
+            span.glyphicon.glyphicon-circle-arrow-down.top

@@ -1,2 +1,17 @@
-h1 {{user.username}}
-button(ng-click='logout()' ng-show='user.username') logout
+div(ng-show='user.username')
+  a(ng-click='goTo("/profile/"+user._id)') {{user.username}}
+  textarea(ng-model='userDiscription')
+  button(ng-click='saveDescription(user._id)') Save description
+  button(ng-click='logout()') logout
+
+  p add link to profile
+  input(ng-model='newLinkTitle' placeholder='enter link text')
+  input(ng-model='newAddressUrl' placeholder='enter url of link')
+  button(ng-click='addLink(user._id)') add link
+
+  div(ng-repeat='link in links')
+    a(href='{{link.address}}') {{link.title}}
+    button(ng-click='deleteLink(link, user._id)') delete link
+div(ng-show='!user.username')
+  p You don't have any account settings (need an account for that bruh...)
+  a(ng-click='goTo("/login")') Go to sign up tab!

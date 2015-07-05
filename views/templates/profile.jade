@@ -1,0 +1,39 @@
+#profile-container
+  .profile-header
+    .profile-nav-container
+      .name-container
+        h4 
+          span {{profileUser.username}}
+    ul.profile-tabs.nav.nav-tabs
+      li.tab(ng-click='loadPresets(profileUser.uploads); profileActiveTab = 0' ng-class='getProfileTabClass(0)')
+        a ULs {{profileUser.uploads.length}}
+      li.tab(ng-click='loadPresets(profileUser.downloads); profileActiveTab = 1' ng-class='getProfileTabClass(1)')
+        a DLs {{profileUser.downloads.length}}
+      li.tab(ng-click='profileView = 1; profileActiveTab = 2' ng-class='getProfileTabClass(2)')
+        a Info
+  #profile-info
+    .profile-data(ng-show='profileView == 0')
+      .data
+        table.table.table-striped.table-hover.user-table
+          thead
+            tr
+              th.name Name
+              th.type Type
+              th.tags Tags
+              th.author Author
+              th.dlC #DL
+              th.dllink DL
+          tbody
+            tr.result-container(ng-repeat='preset in presets')
+              td.name {{preset.name}}
+              td.type {{preset.fileType}}
+              td.tags {{preset.tags[0]}} {{preset.tags[1]}} {{preset.tags[2]}}
+              td.author(ng-click='goTo("/profile/"+preset.owner)') {{preset.ownerName}}
+              td.dlC {{preset.downloadCount}}
+              td.dllink
+                a.link(download='{{ preset.name }}{{ preset.fileType }}' href="data:nmsv;base64,{{ preset.fileBase64 }}" ng-click='savePresetToUser(preset._id, user._id); preset.downloadCount = preset.downloadCount + 1')
+                  span.glyphicon.glyphicon-circle-arrow-down.top
+    .profile-data.info(ng-show='profileView == 1')
+      p {{profileUser.info.bio}}
+      div(ng-repeat='link in profileUser.info.links')
+        a(href='{{link.address}}') {{link.title}}

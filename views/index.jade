@@ -6,12 +6,25 @@ html(ng-app="scotchTodo")
     script(src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js")
     script(src="//ajax.googleapis.com/ajax/libs/angularjs/1.0.8/angular.min.js")
     script(src="core.js")
+    script(src='directives/searchDirective.js')
+    script(src='controllers/mainController.js')
+    script(src='controllers/loginController.js')
+    script(src='controllers/libraryController.js')
+    script(src='controllers/searchController.js')
+    script(src='controllers/settingsController.js')
+    script(src='controllers/uploadController.js')
+    script(src='controllers/profileController.js')
   body(ng-controller="mainController")
     #app-container
-      #container-tabs
-        a.tab(ng-click='goTo("/search")') Search
-        a.tab(ng-click='goTo("/library")' ng-show='user.username') Library
-        a.tab(ng-click='goTo("/login")' ng-show='!user.username') Login or Sign Up!
-        a.tab(ng-click='goTo("/upload")') Upload
-        a.tab(ng-click='goTo("/settings")') (_)
+      ul#container-tabs.nav.nav-tabs
+        li.search-tab(ng-class='getTabClass(0)' ng-click='activeTab = 0')
+          a.tab(ng-class='getHighlight(0)' ng-click='goTo("/search")') Search
+        li.library-tab(ng-class='getTabClass(1)' ng-click='activeTab = 1')
+          a.tab(ng-class='getHighlight(1)' ng-click='goTo("/library")' ng-show='user.username') Library
+          a.tab(ng-class='getHighlight(1)' ng-click='goTo("/login")' ng-show='!user.username') Login or Sign Up!
+        li.upload-tab(ng-class='getTabClass(2)' ng-click='activeTab = 2')
+          a.tab(ng-class='getHighlight(2)' ng-click='goTo("/upload")') Upload
+        li.settings-tab(ng-class='getTabClass(3)' ng-click='activeTab = 3')
+          a.tab(ng-class='getHighlight(3)' ng-click='goTo("/settings")')
+            span.glyphicon.glyphicon-cog
       #view(ng-view)

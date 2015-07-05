@@ -40,6 +40,8 @@ app.use(session({
     store: new MongoStore({
       mongooseConnection: mongoose.connection
     })
+    //rolling: true, // updates from db upon each request
+    //resave: true,
 }));
 app.use(methodOverride());
 

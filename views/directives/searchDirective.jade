@@ -1,20 +1,18 @@
 #search-container
   .search-area(ng-show='showOption(0)')
-    form(ng-submit='updateResults({userName: userNameInput})')
-      input.user-search(type='text' placeholder='Search users' ng-model='userNameInput')
+    form.form-inline(ng-submit='updateResults({userName: userNameInput})')
+      input.form-control.user-search(type='text' placeholder='Enter author name' ng-model='userNameInput')
   .search-area(ng-show='showOption(1)')
-    form(ng-submit='updateResults({presetName: presetNameInput, fileType: fileTypeSelection})')
-      input.preset-search(type='text' placeholder='Search presets by name' ng-model='presetNameInput')
+    form.form-inline(ng-submit='updateResults({presetName: presetNameInput, fileType: fileTypeSelection})')
+      input.form-control.preset-search(type='text' placeholder='Enter preset name' ng-model='presetNameInput')
   .search-area(ng-show='showOption(2)')
-    form(ng-submit='updateResults({tags: [tag1, tag2, tag3], fileType: fileTypeSelection})')
-      input.preset-tag(type='text' placeholder='tag 1' ng-model='tag1')
-      input.preset-tag(type='text' placeholder='tag 2' ng-model='tag2')
-      input.preset-tag(type='text' placeholder='tag 3' ng-model='tag3')
+    form.form-inline(ng-submit='updateResults({tags: [tag1, tag2, tag3], fileType: fileTypeSelection})')
+      input.form-control.preset-tag(type='text' placeholder='tag 1' ng-model='tag1')
+      input.form-control.preset-tag(type='text' placeholder='tag 2' ng-model='tag2')
+      input.form-control.preset-tag(type='text' placeholder='tag 3' ng-model='tag3')
       input.hidden-submit(type="submit")
-  select(ng-model='fileTypeSelection')
-    option(value='nmsv') nmsv
-    option(value='nfm8') nfm8
-  .option-select
-    div(ng-click='setOption(0)') user
-    div(ng-click='setOption(1)') patch
-    div(ng-click='setOption(2)') tags
+  select.form-control(ng-model='fileTypeSelection' ng-options="type.name for type in types")
+  .option-select.btn-group.btn-group-justified
+    .btn.btn-primary(ng-click='setOption(0)' ng-class='getClass(0)') user
+    .btn.btn-primary(ng-click='setOption(1)' ng-class='getClass(1)') patch
+    .btn.btn-primary(ng-click='setOption(2)' ng-class='getClass(2)') tags

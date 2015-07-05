@@ -2,23 +2,37 @@ body {
   position: relative;
   height: 100%;
   width: 100%;
-  background-color: #eeeeee;
+  background-color: #444;
 }
 body #app-container {
   width: 480px;
   height: 470px;
   margin: 50px auto 0 auto;
   background-color: #ffffff;
+  border-radius: 4px;
 }
 body #app-container #container-tabs {
   width: 100%;
-  height: 48px;
+  cursor: pointer;
 }
-body #app-container #container-tabs .tab {
-  display: inline-block;
-  width: 25%;
-  height: 100%;
-  border: black 1px solid;
+body #app-container #container-tabs a {
+  height: 42px;
+}
+body #app-container #container-tabs .search-tab {
+  width: 43%;
+}
+body #app-container #container-tabs .library-tab {
+  width: 30%;
+}
+body #app-container #container-tabs .upload-tab {
+  width: 17%;
+}
+body #app-container #container-tabs .settings-tab {
+  width: 10%;
+}
+body #app-container #container-tabs .highlighted {
+  background-color: #3276b1;
+  color: #fff;
 }
 body #app-container #view {
   height: 422px;
@@ -27,7 +41,6 @@ body #app-container #view {
 #search-container {
   height: 34px;
   width: 100%;
-  border: black 1px dashed;
 }
 #search-container .search-area {
   width: 50%;
@@ -58,11 +71,6 @@ body #app-container #view {
 }
 #search-container .option-select {
   width: 35%;
-  height: 100%;
-  display: inline-block;
-}
-#search-container .option-select div {
-  width: 33%;
   display: inline-block;
 }
 .signup-library-view {
@@ -73,14 +81,127 @@ body #app-container #view {
   width: 50%;
   height: 100%;
   display: inline-block;
-  border: black 1px solid;
 }
-#search-viewer {
-  height: 388px;
+.search-viewer {
+  height: 394px;
   width: 100%;
-  border: blue 1px dashed;
+  overflow-y: scroll;
 }
-#search-viewer .user {
+.search-viewer .result-container {
   width: 100%;
-  height: 50px;
+  cursor: pointer;
+}
+.search-viewer .result-container .link {
+  display: inline-block;
+}
+.search-viewer .result-container p {
+  display: inline-block;
+}
+table {
+  width: 100%;
+  table-layout: fixed;
+}
+.user-table {
+  width: 100%;
+}
+.user-table td {
+  font-size: 12px;
+}
+.user-table td .top {
+  top: 4px;
+}
+.user-table .name {
+  width: 21.6%;
+}
+.user-table .type {
+  width: 9.5%;
+}
+.user-table .tags {
+  width: 31.6%;
+}
+.user-table .author {
+  width: 20.4%;
+}
+.user-table .dlC {
+  width: 8.3%;
+}
+.user-table .dllink {
+  width: 8.3%;
+}
+#upload-view {
+  width: 100%;
+  height: 100%;
+}
+#upload-view .upload-section {
+  height: 16%;
+  width: 80%;
+  margin: 6.5% 10%;
+}
+#upload-view .upload-section .tag {
+  width: 100px;
+  margin: 0 10px;
+}
+#upload-view .upload-section .checkbox {
+  display: inline-block;
+  margin: 0 10px 0 0;
+}
+#upload-view .upload-section label {
+  display: inline;
+  margin: 0 10px 0 0;
+}
+#upload-view .small {
+  height: 10%;
+}
+#upload-view .small a {
+  float: right;
+  margin-right: 36px;
+}
+#upload-view .button {
+  margin: 6.5% 0 0 10%;
+  height: 5%;
+}
+#upload-view .read-out {
+  margin: 0 10%;
+}
+#profile-container {
+  width: 100%;
+  height: 100%;
+}
+#profile-container .profile-header {
+  width: 100%;
+  height: 42px;
+  border-bottom: solid 1px #EDD;
+  border-left: solid 1px #edd;
+}
+#profile-container .profile-header .profile-nav-container {
+  width: 40%;
+  height: 42px;
+  display: inline-block;
+}
+#profile-container .profile-header .profile-nav-container .name-container {
+  position: relative;
+  top: -32%;
+  margin-left: 11px;
+}
+#profile-container .profile-header .profile-tabs {
+  width: 60%;
+  display: inline-block;
+  cursor: pointer;
+}
+#profile-container .profile-header .profile-tabs .tab {
+  width: 33%;
+}
+#profile-container #profile-info {
+  overflow-y: scroll;
+  height: 392px;
+}
+#profile-container #profile-info .profile-data {
+  height: 392px;
+  width: 100%;
+}
+#profile-container #profile-info .info {
+  padding: 30px;
+}
+.search-highlight {
+  background-color: #3276b1;
 }

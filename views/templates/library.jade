@@ -1,15 +1,25 @@
-.signup-library-view(ng-show='!user.username')
-  .section
-    h1 Sign Up
-    form(ng-submit='createUser(formData.newUser, formData.newPassword)')
-      input(type='text' placeholder='New username' ng-model='formData.newUser')
-      input(type='text' placeholder='New password' ng-model='formData.newPassword')
-      input(type='submit')
-  .section
-    h1 Login
-    form(ng-submit='login(formData.user, formData.password)')
-      input(type='text' placeholder='Username' ng-model='formData.user')
-      input(type='text' placeholder='Password' ng-model='formData.password')
-      input(type='submit')
-.signup-library-view(ng-show='user.username')
-  ng-search(option='searchOption')
+ng-search(option='searchOption' update-results='updateLibraryResults(userName, presetName, tags, fileType)')
+.search-viewer
+  table.table.table-striped.table-hover.user-table(ng-show='searchedPresets')
+    thead
+      tr
+        th Name
+        th Type
+        th Tags
+        th 
+        th 
+        th Author
+        th #DLd
+        th DL
+    tbody
+      tr.result-container(ng-repeat='preset in searchedPresets')
+        td {{preset.name}}
+        td {{preset.fileType}}
+        td {{preset.tags[0]}}
+        td {{preset.tags[1]}}
+        td {{preset.tags[2]}}
+        td(ng-click='goTo("/profile/"+preset.owner)') {{preset.ownerName}}
+        td {{preset.downloadCount}}
+        td 
+          a.link(download='{{ preset.name }}{{ preset.fileType }}' href="data:nmsv;base64,{{ preset.fileBase64 }}" ng-click='savePresetToUser(preset._id, user._id); preset.downloadCount = preset.downloadCount + 1')
+            span.glyphicon.glyphicon-circle-arrow-down.top

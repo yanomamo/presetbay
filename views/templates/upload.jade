@@ -1,1 +1,20 @@
-div upload
+#upload-view
+  .upload-section
+    form.form-inline
+      h5 1) Enter tags to describe the presets you're uploading
+      input.form-control.tag(type='text' placeholder='tag1' ng-model='tags[0]')
+      input.form-control.tag(type='text' placeholder='tag2' ng-model='tags[1]')
+      input.form-control.tag(type='text' placeholder='tag3' ng-model='tags[2]')
+  .small.upload-section
+    h5(ng-show='user.username') 2) Presets will be uploaded with the account: {{user.username}}
+    h5(ng-show='!user.username') 2) Presets will be uploaded anonymously. Want credit?
+    a(ng-show='!user.username' ng-click='goTo("/login")') Sign in before uploading to get credit for your presets
+  .upload-section
+    label 3)
+    input.checkbox(type="checkbox" ng-model='checked')
+    label I agree that I am the original creator of the presets I am uploading. I wouldn't steal and distribute someone elses creative work (that'd be pretty lame).
+  .small.upload-section.button
+    input#file-upload(type='file' ng-disabled='!checked || (!tags[1] || !tags[0] || !tags[2])' multiple)
+  .small.upload-section.read-out
+    h3 {{ currentFileUploading }}
+    p {{ uploadProgress }}
