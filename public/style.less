@@ -116,10 +116,18 @@ body {
   height: 100%;
 
   .section {
-    width: 50%;
-    height: 100%;
+    width: 40%;
+    margin: 5%;
+    height: 90%;
     display: inline-block;
-    //border: black 1px solid;
+
+    .submit {
+      float: right;
+    }
+  }
+
+  input {
+    margin-bottom: 10px;
   }
 
 }
@@ -176,6 +184,7 @@ table {
 
   .author {
     width: 20.4%;
+    cursor: pointer;
   }
 
   .dlC {
@@ -289,3 +298,80 @@ table {
 // .active {
 //   background-color: #3276b1;
 // }
+
+.settings-info {
+  width: 100%;
+  height: 100%;
+
+  .profile-button {
+    margin: 22px 10%;
+    width: 80%;
+  }
+
+  textarea {
+    width: 80%;
+    height: 80px;
+    margin: 0 10%;
+  }
+
+  .links {
+    width: 80%;
+    margin: 51px 10% 0 10%;
+
+    .link-area {
+      width: 50%;
+      height: 100px;
+      display: inline-block;
+      vertical-align: top;
+
+      input {
+        width: 100%;
+      }
+
+      p {
+        height: 20%;
+        margin: 0;
+      }
+
+      .add-link {
+        margin: 0;
+      }
+
+      .link-scroll-container {
+        height: 80%;
+        overflow-y: scroll;
+        border-top: 1px solid #ccc;
+        border-bottom: 1px solid #ccc;
+
+        .link {
+          height: 32px;
+        }
+      }
+    }
+
+    button {
+      float: right;
+      margin-right: 10px;
+    }
+  }
+
+  .save-discription {
+    display: block;
+    float: right;
+    margin-right: 10%;
+  }
+
+  .logout {
+    margin-right: 6px;
+    float: right;
+    margin-top: 79px;
+  }
+}
+
+tbody {
+  tr:nth-child(odd) {
+    td {
+      background-color: #f6fbff;
+    }
+  }
+}

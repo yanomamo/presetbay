@@ -36,4 +36,4 @@
     .profile-data.info(ng-show='profileView == 1')
       p {{profileUser.info.bio}}
       div(ng-repeat='link in profileUser.info.links')
-        a(href='{{link.address}}') {{link.title}}
+        a(target='_blank' href='{{link.address}}') {{link.title}}

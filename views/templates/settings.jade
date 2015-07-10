@@ -1,17 +1,41 @@
-div(ng-show='user.username')
-  a(ng-click='goTo("/profile/"+user._id)') {{user.username}}
+.settings-info(ng-show='user.username')
+  a.profile-button.btn.btn-success(ng-click='goTo("/profile/"+user._id)') Go to {{user.username}}'s user page
   textarea(ng-model='userDiscription')
-  button(ng-click='saveDescription(user._id)') Save description
-  button(ng-click='logout()') logout
+  button.save-discription.btn.btn-info(ng-click='saveDescription(user._id)') Save description
 
-  p add link to profile
-  input(ng-model='newLinkTitle' placeholder='enter link text')
-  input(ng-model='newAddressUrl' placeholder='enter url of link')
-  button(ng-click='addLink(user._id)') add link
+  .links
+    .link-area
+      p Your page links
+      .link-scroll-container
+        .link(ng-repeat='link in links')
+          a(target='_blank' href='{{link.address}}') {{link.title}}
+          button.btn.btn-danger(ng-click='deleteLink(link, user._id)')
+            span.glyphicon.glyphicon-remove
 
-  div(ng-repeat='link in links')
-    a(href='{{link.address}}') {{link.title}}
-    button(ng-click='deleteLink(link, user._id)') delete link
-div(ng-show='!user.username')
+    .link-area
+      p Add link to user page
+      input.form-control(ng-model='newLinkTitle' placeholder='enter link text')
+      input.form-control(ng-model='newAddressUrl' placeholder='paste full url here')
+      button.btn.btn-info.add-link(ng-click='addLink(user._id)') Add link
+
+  .logout.btn.btn-warning(ng-click='logout()') Logout 
+    span.glyphicon.glyphicon-log-out
+
+.settings-info(ng-show='!user.username')
   p You don't have any account settings (need an account for that bruh...)
   a(ng-click='goTo("/login")') Go to sign up tab!
+    
+
+// glyphicon.glyphicon-log-out
+// glyphicon.glyphicon-user
+// glyphicon.glyphicon-search
+
+// glyphicon.glyphicon-hdd
+// glyphicon.glyphicon-star
+// glyphicon.glyphicon-star-empty
+// glyphicon.glyphicon-folder-open
+
+// btn.btn-primary
+// btn.btn-info
+// btn.btn-warning
+// btn.btn-success

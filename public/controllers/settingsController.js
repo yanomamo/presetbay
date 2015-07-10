@@ -4,6 +4,7 @@ angular.module('scotchTodo').controller('settingsController', function ($scope, 
 
   if (userInfo.data.username) {
     $scope.links = userInfo.data.info.links;
+    $scope.userDiscription = userInfo.data.info.bio;
   }
 
   $scope.$parent.activeTab = 3;
@@ -33,6 +34,8 @@ angular.module('scotchTodo').controller('settingsController', function ($scope, 
     })
     .success(function () {
       console.log('successfully update info')
+      $scope.newLinkTitle = '';
+      $scope.newAddressUrl = '';
     })
     .error(function(err){
       console.log(err);

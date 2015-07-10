@@ -4,6 +4,14 @@ angular.module('scotchTodo').controller('mainController', function mainControlle
   $scope.user = {};
   $scope.activeTab = 0;
 
+  // this section for getting the total count
+  // $scope.presetCount = 0;
+
+  // $http.get('/api/presets/total')
+  // .success(function(data) {
+  //   $scope.presetCount = data.count;
+  // });
+
   $scope.goTo = function (path) {
     $location.path(path);
   }

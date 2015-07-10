@@ -1,6 +1,7 @@
 var express = require('express');
 var mongoose = require('mongoose'); 
 var router = express.Router();
+var presetReturnLimit = 150;
 
 var Presets = mongoose.model('Presets', {
     name: String,
@@ -12,7 +13,7 @@ var Presets = mongoose.model('Presets', {
     ownerName: String
 });
 
-// router.get('/', function(req, res) {
+// router.get('/total', function(req, res) {
 //   // use mongoose to get all todos in the database
 //   Presets.find(function(err, preset) {
 
@@ -27,38 +28,76 @@ var Presets = mongoose.model('Presets', {
 router.get('/name/:preset_name', function (req, res) {
   var name = req.params.preset_name;
 
-  Presets.find({
+  Presets
+  .find({
     name: new RegExp(name, "i")
-  }, function(err, presets) {
+  })
+  .sort({
+    name: 'asc'
+  })
+  .limit(presetReturnLimit)
+  .exec(function(err, presets) {
     if (err)
       res.send(err)
 
     res.send(presets);
-  })
+  });
 });
 
 router.post('/tags', function(req, res) {
-  // use mongoose to get all todos in the database
   if (req.body.ids) {
-    Presets.find({
+    // Presets.find({
+    //   tags: { $in : req.body.tags },
+    //   _id: {$in : req.body.ids}
+    // },function(err, presets) {
+
+    //   // if there is an error retrieving, send the error. nothing after res.send(err) will execute
+    //   if (err)
+    //       res.send(err)
+
+    //   res.json(presets); // return all todos in JSON format
+    // }).limit(presetReturnLimit);
+
+    Presets
+    .find({
       tags: { $in : req.body.tags },
       _id: {$in : req.body.ids}
-    },function(err, presets) {
-
-      // if there is an error retrieving, send the error. nothing after res.send(err) will execute
+    })
+    .sort({
+      name: 'asc'
+    })
+    .limit(presetReturnLimit)
+    .exec(function(err, presets) {
       if (err)
-          res.send(err)
+        res.send(err)
 
-      res.json(presets); // return all todos in JSON format
+      res.send(presets);
     });
+
   } else {
-    Presets.find({
+    // Presets.find({
+    //   tags: { $in : req.body.tags }
+    // },function(err, presets) {
+    //   if (err)
+    //       res.send(err)
+    //   res.json(presets); // return all todos in JSON format
+    // }).limit(presetReturnLimit);
+    
+    Presets
+    .find({
       tags: { $in : req.body.tags }
-    },function(err, presets) {
+    })
+    .sort({
+      name: 'asc'
+    })
+    .limit(presetReturnLimit)
+    .exec(function(err, presets) {
       if (err)
-          res.send(err)
-      res.json(presets); // return all todos in JSON format
+        res.send(err)
+
+      res.send(presets);
     });
+    
   }
 });
 
@@ -66,9 +105,7 @@ router.post('/getUserDownloads', function (req, res) {
   Presets.find({
     _id: {$in: req.body.downloads}
   }, function(err, presets) {
-
-    // if there is an error retrieving, send the error. nothing after res.send(err) will execute
-    if (err)
+   if (err)
         res.send(err)
 
     res.send(presets); // return all todos in JSON format
@@ -102,14 +139,30 @@ router.post('/searchByUser', function(req, res) {
   console.log(userId);
 
   //find presets in the array with that owner
-  Presets.find({
+  // Presets.find({
+  //   _id: {$in: ids},
+  //   owner: userId
+  // }, function (err, presets) {
+  //   if (err)
+  //     res.send(err)
+  //   res.send(presets);
+  // }).limit(presetReturnLimit);
+  Presets
+  .find({
     _id: {$in: ids},
     owner: userId
-  }, function (err, presets) {
+  })
+  .sort({
+    name: 'asc'
+  })
+  .limit(presetReturnLimit)
+  .exec(function(err, presets) {
     if (err)
       res.send(err)
+
     res.send(presets);
-  })
+  });
+
 })
 
 router.post('/downloaded', function (req, res) {
@@ -129,14 +182,31 @@ router.post('/downloaded', function (req, res) {
 });
 
 router.post('/query', function (req, res) {
-  Presets.find({
+  // Presets.find({
+  //   _id: {$in: req.body.ids},
+  //   name: new RegExp(req.body.name, "i")
+  // }, function (err, presets) {
+  //   if (err)
+  //     res.send(err)
+  //   res.send(presets);
+  // }).limit(presetReturnLimit);
+  
+  Presets
+  .find({
     _id: {$in: req.body.ids},
     name: new RegExp(req.body.name, "i")
-  }, function (err, presets) {
+  })
+  .sort({
+    name: 'asc'
+  })
+  .limit(presetReturnLimit)
+  .exec(function(err, presets) {
     if (err)
       res.send(err)
+
     res.send(presets);
-  })
+  });
+
 })
 
 // delete a todo

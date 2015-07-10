@@ -12,6 +12,12 @@ angular.module('scotchTodo').controller('uploadController', function ($scope, $h
     var presetIds = [];
     var userId;
     var ownerName;
+
+    // if (files.length > 100) {
+    //   alert('Sorry, you can only upload up to 100 files at once. Please select fewer files and try again!');
+    //   return;
+    // }
+
     if ($scope.user.username) {
       userId = $scope.user._id;
       ownerName = $scope.user.username;

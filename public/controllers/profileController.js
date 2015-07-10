@@ -21,6 +21,7 @@ angular.module('scotchTodo').controller('profileController', function ($scope, $
     return {active: tabIndex == $scope.profileActiveTab}
   }
 
+  // first get user
   $http.get('/api/users/searchId/' + $routeParams.profileId)
     .success(function(user) {
       $scope.profileUser = user;

@@ -2,6 +2,7 @@ var express = require('express');
 var mongoose = require('mongoose');
 var md5 = require('MD5');
 var router = express.Router();
+var userReturnLimit = 100;
 
 var Users = mongoose.model('Users', {
   username: String,
@@ -44,14 +45,30 @@ router.get('/searchId/:id', function (req, res) {
 router.get('/search/:username', function (req, res) {
   var name = req.params.username;
 
-  Users.find({
-    username: new RegExp(name, "i")
-  }, function(err, users) {
+  // Users.find({
+  //   username: new RegExp(name, "i")
+  // }, function(err, users) {
 
+  //   if (err)
+  //     res.send(err)
+  //   res.send(users);
+  // }).limit(userReturnLimit);
+
+  Users
+  .find({
+    username: new RegExp(name, "i")
+  })
+  .sort({
+    username: 'asc'
+  })
+  .limit(userReturnLimit)
+  .exec(function(err, users) {
     if (err)
       res.send(err)
+
     res.send(users);
   });
+
 });
 
 router.post('/login', function(req, res) {

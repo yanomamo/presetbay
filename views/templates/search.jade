@@ -31,3 +31,4 @@ ng-search(option='searchOption' update-results='updateSearchResults(userName, pr
         td.dllink
           a.link(download='{{ preset.name }}{{ preset.fileType }}' href="data:nmsv;base64,{{ preset.fileBase64 }}" ng-click='savePresetToUser(preset._id, user._id); preset.downloadCount = preset.downloadCount + 1')
             span.glyphicon.glyphicon-circle-arrow-down.top
+  p(ng-show='searchedPresets.length == 150') Results limited to 150 presets, refine search for different options.
