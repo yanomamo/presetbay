@@ -4,9 +4,12 @@ html(ng-app="scotchTodo")
     link(rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css")
     link(rel="stylesheet" type="text/css" href="style.css")
     script(src='googleAnalytics.js')
+    //script(src='tawk.js')
+    script(src='//connect.soundcloud.com/sdk.js')
     script(src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js")
     script(src="//ajax.googleapis.com/ajax/libs/angularjs/1.0.8/angular.min.js")
     script(src="core.js")
+    //script(src='services/soundcloudService.js')
     script(src='directives/searchDirective.js')
     script(src='controllers/mainController.js')
     script(src='controllers/loginController.js')
@@ -29,3 +32,25 @@ html(ng-app="scotchTodo")
           a.tab(ng-class='getHighlight(3)' ng-click='goTo("/settings")')
             span.glyphicon.glyphicon-cog
       #view(ng-view)
+
+    .left-bubble.bubble
+      h4 Track of the Day
+      .playback-control-container
+        img.graphic(ng-src='{{artist.image}}' ng-mouseenter='hovering=true')
+        .controls(ng-show='hovering || !clicked' ng-mouseleave='hovering=false')
+          .center
+            span.control-button.glyphicon.glyphicon-play-circle(ng-show='!clicked || !playing' ng-click='play()')
+            span.control-button.glyphicon.glyphicon-stop(ng-show='playing' ng-click='stop()')
+
+    .right-bubble.bubble
+      img.graphic(src='https://avatars2.githubusercontent.com/u/4551618?v=3&s=200')
+      h4 Ad
+
+    #footer-container
+      h4 {{artist.name}} - {{artist.trackTitle}} |
+      h4(ng-show='artist.collab') | Looking to collaborate |
+      h4(ng-show='artist.tour') | Looking to tour |
+      .info.btn.btn-info(ng-click='goTo("/profile/"+artist._id)') See artist info
+
+      //img(ng-src='{{albumArt}}')
+      //span.glyphicon.glyphicon-play(ng-click='play()' ng-show='track' style='color:#fff')

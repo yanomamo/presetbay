@@ -1,7 +1,7 @@
 angular.module('scotchTodo').controller('profileController', function ($scope, $http, $routeParams, userInfo) {
   $scope.$parent.user = userInfo.data;
   $scope.profileUser = {};
-  $scope.profileActiveTab = 0;
+  $scope.profileActiveTab = 2;
 
   $scope.loadPresets = function (presetIds) {
     $scope.profileView = 0;
@@ -25,9 +25,10 @@ angular.module('scotchTodo').controller('profileController', function ($scope, $
   $http.get('/api/users/searchId/' + $routeParams.profileId)
     .success(function(user) {
       $scope.profileUser = user;
+      $scope.profileView = 1;
 
       // initial tab is uploads
-      $scope.loadPresets(user.uploads);
+      //$scope.loadPresets(user.uploads);
     })
     .error(function(err) {
       console.log(err);

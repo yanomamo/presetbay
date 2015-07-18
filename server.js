@@ -17,6 +17,7 @@ var presets = require('./routes/presets');
 var users = require('./routes/users');
 
 // configure the database
+// mongodb://yanomamo:blackbelt@ds047752.mongolab.com:47752/presetbaydb
 mongoose.connect('mongodb://127.0.0.1/mydb');     // connect to mongoDB database on modulus.io
 
 // compile less file

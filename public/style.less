@@ -1,20 +1,27 @@
-@color1: #eee;
-@color2: #fff;
-@color3: #ddd;
+@footer-color: #fff;
+@background-color: #444;
+@container-color: #fff;
+@border-color: #E0FFFF;
+@footer-height: 39px;
 
 body {
   position: relative;
   height: 100%;
   width: 100%;
-  background-color: #444;
+  background-color: @background-color;
+  padding-top: 50px;
+  min-width: 980px;
 
   #app-container {
+    z-index: 2;
     width: 480px;
     height: 470px;
-    margin: 50px auto 0 auto;
-    background-color: @color2;
+    //display: flex;
+    //align-self: center;
+    margin: 0 auto 0 auto;
+    background-color: @container-color;
     border-radius: 4px;
-    //border: 1px solid #eee;
+    //border: 1px solid @border-color;
 
     #container-tabs {
       width: 100%;
@@ -373,5 +380,86 @@ tbody {
     td {
       background-color: #f6fbff;
     }
+  }
+}
+
+.bubble {
+  height: 225px;
+  width: 200px;
+  background-color: @footer-color;
+  position: fixed;
+  bottom: @footer-height;
+
+  h4 {
+    margin: 2px 0 4px 29px;
+  }
+
+
+  .playback-control-container {
+    position: relative;
+    width: 200px;
+    height: 200px;
+
+    .graphic {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+    }
+
+    .controls {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      opacity: 0.7;
+      background-color: #000;
+      cursor: pointer;
+
+      .center {
+        height: 50px;
+        width: 50px;
+        margin: 75px 75px 75px 75px;
+
+        .control-button {
+          font-size: 50px;
+          color: #fff;
+        }
+      }
+    }
+  }
+}
+
+.right-bubble {
+  right: 0;
+  top: 0;
+  z-index: -1;
+  border-bottom-left-radius: 5px;
+  background-color: #eee;
+}
+
+.left-bubble {
+  left: 0;
+  border-top-right-radius: 5px;
+  //border: 1px solid @border-color;
+}
+
+#footer-container {
+  position: fixed;
+  bottom: 0;
+  //width: 100%;
+  height: @footer-height;
+  background-color: @footer-color;
+  padding: 0 15px;
+  border-top-right-radius: 5px;
+  //border: 1px solid @border-color;
+
+  h4 {
+    display: inline-block;
+  }
+
+  .info {
+    display: inline-block;
+    margin: 0 0 0 10px;
+    height: 27px;
+    padding-top: 2px;
   }
 }

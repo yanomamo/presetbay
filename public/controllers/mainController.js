@@ -1,3 +1,5 @@
+var spotlightTracks = ['191683919'];
+
 angular.module('scotchTodo').controller('mainController', function mainController($scope, $http, $location) {
   $scope.formData = {};
   $scope.searchOption = 1;
@@ -62,15 +64,43 @@ angular.module('scotchTodo').controller('mainController', function mainControlle
       })
   }
 
-  // delete a todo after checking it
-  $scope.deleteTodo = function(id) {
-    $http.delete('/api/presets/' + id)
-      .success(function(data) {
-        $scope.presets = data;
-        console.log(data);
-      })
-      .error(function(data) {
-        console.log('Error: ' + data);
-      });
-  };
+  //Soundcloud controller logic
+  $scope.track = {};
+  $scope.playing = false;
+  $scope.clicked = false;
+
+  SC.initialize({
+    client_id: '2dea4d7cb59c9f86f7b9c2d8744ade69'
+  });
+
+  SC.get('/tracks/191683919', function(data, err) {
+    $scope.$apply(function() {
+      console.log(data);
+      $scope.artist = {
+        _id: '559f720a54819dc12800002c',
+        albumArt: data.artwork_url,
+        name: data.user.username,
+        trackTitle: data.title,
+        image: data.user.avatar_url,
+        tour: true,
+        collab: true
+      }
+    })
+  })
+
+  SC.stream('/tracks/191683919', function(track) {
+    $scope.track = track;
+  })
+
+  $scope.play = function () {
+    $scope.track.play();
+    $scope.clicked = true;
+    $scope.playing = true;
+  }
+
+  $scope.stop = function () {
+    $scope.track.stop();
+    $scope.playing = false;
+  }
+
 });
