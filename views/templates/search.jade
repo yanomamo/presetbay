@@ -1,4 +1,5 @@
 ng-search(option='searchOption' update-results='updateSearchResults(userName, presetName, tags, fileType)')
+img.gear-loader(src='/images/gears.gif' ng-show='loading')
 .search-viewer(ng-show='searchOption == 0')
   table.table.table-striped.table-hover(ng-show='searchedUsers')
     thead

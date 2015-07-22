@@ -16,6 +16,7 @@
     "connect-mongo": "*",
     "cookie-parser": "*",
     "MD5": "*",
-    "bootstrap": "*"
+    "bootstrap": "*",
+    "serve-favicon": "*"
     }
 }

@@ -1,0 +1,64 @@
+html(ng-app="faq")
+  head
+    title!= title
+    link(rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css")
+    link(rel="stylesheet" type="text/css" href="stylefaq.css")
+    // Uncomment when live
+    script(src='googleAnalytics.js')
+    script(src='mixpanel.js')
+    script(src='tawk.js')
+    script(src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js")
+    script(src="//ajax.googleapis.com/ajax/libs/angularjs/1.0.8/angular.min.js")
+    script(src='faqCore.js')
+    script(src='faqController.js')
+  body(ng-controller="faqController")
+    #faq-page
+      h1 PresetBay Ideology
+      h4 A painters possibilities are only limited by his imagination and the colors at his disposal. In the same way, a producer is only limited by his imagination and his variety of instruments. Today, there is an infinity of possible instruments through audio synthesis, and an infinity of creative possibility. PresetBay makes exploring infinity easier, so you can spend more time creating.
+      h1 Sharing your work
+      h4 No producer has ever gained success from having a certain preset. Success comes from taking that sound and sculpting it around a context of sounds. By sharing your presets, you aren’t reducing your chances of success. Rather, you are helping further the musical community as a whole by adding your own dimension to it.
+      h1 User of the Day
+      h4 The user of the day spot aims to give exposure to talented artists contributing to PresetBay. Being a featured artist exposes you to a huge pool of possible collaborators, partners, similar artists to open for, etc. Networking is everything, and the first step in building your network is letting your peers know you exist!
+      h4 Getting a 24 hour slot is simple. For the first month of PresetBay (July 22nd through August 22nd), slots will be given to users solely for contributing.
+      h4 Here’s the details:
+      ul(style="list-style-type:disc")
+        li
+          h4 Artist must create an account and upload at least 100 of their own custom made presets.
+        li
+          h4 Artist must have a track of decent production quality; I don’t discriminate based on style, I do descriminate on production quality.
+        li
+          h4 Send an email to yanomamo@gmail.com with the subject “PB Submission” and include a soundcloud link to your track, your PresetBay username so I can check your presets, and any special info to include in the spot (Looking to collaborate? Looking to open for anyone? Looking to start a label?)
+        li
+          h4 Optional: Fill out your PresetBay info on your user page with links to all your other accounts and your email so people can get in touch with you.
+      h4 I’ll reply whether you get a spot or not. If you don’t, don’t sweat it. There are tons of talented people out there who submit, and my opinion of your work is largely irrelevant in the grand scheme of things. If you get a spot, I’ll email you back with the date your track will be in the spotlight.
+      h1 Expanding PresetBay
+      h4 I started with Native Instrument’s Massive presets because from what I can tell they are the most in demand. Vote below on the preset type that should be supported next!
+      .form-container  
+        form(ng-submit='vote()')#voting-area
+          .checkbox
+            label
+              input.checkbox(type='checkbox' ng-model='votes.fm8') 
+              label(ng-click='votes.fm8 = !votes.fm8') Native Instrument's FM8 (.nfm8) - Votes: {{voteCounts.fm8}}
+          .checkbox
+            label
+              input.checkbox(type='checkbox' ng-model='votes.syl')
+              label(ng-click='votes.syl = !votes.syl') Sylenth1 (.fxp) - Votes: {{voteCounts.syl}}
+          .checkbox
+            label
+              input.checkbox(type='checkbox' ng-model='votes.nex')
+              label(ng-click='votes.nex = !votes.nex') Nexus (.fxp) - Votes: {{voteCounts.nex}}
+          .checkbox
+            label
+              input.checkbox(type='checkbox' ng-model='votes.unk')
+              input.form-control(ng-model='suggestedPreset' ng-change='votes.unk = true' placeholder='Other preset type')
+              label(ng-click='votes.unk = !votes.unk')  - Votes: {{voteCounts.unk}}
+          input.btn.btn-primary(type='submit' ng-show='!submitted')
+        h4(ng-show='submitted') Thanks for your input!
+      h1 Feedback
+      h4 The first version of PresetBay is based on my experience and assumptions I’ve made, which could very well be wrong! Creating a service that best meets your needs is contingent on your feedback. All changes to the site will be based on how you use the site, your ideas for what the site needs, and your feedback.
+      h4 So don’t be shy! Email me at yanomamo@gmail.com with the subject “PB feedback” or message the Tawk bubble in the bottom right hand corner of the site; its connected right to my phone.
+      h1 About PresetBay’s Founder
+      h4 I’m Luke! Just finished college, and left my last company in January (they’re still doing awesome things! Check ‘em out at nebulus.io - its Google Docs meets Garageband, basically collaborative arrangement in-browser). Now I’m producing in my freetime, and building services I think will be helpful. I think PresetBay is in a really interesting position to help lots of people create amazing work, and fix the annoying process of scouring the web and youtube for random mediafire zips of presets...
+      //img(src='/images/2rip.jpg')
+      //img(src='/images/luke20.jpg')
+    a.back.btn.btn-info(href='/') Back to the Bay

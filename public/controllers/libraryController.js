@@ -1,8 +1,7 @@
 angular.module('scotchTodo').controller('libraryController', function ($scope, $http, userInfo) {
   $scope.$parent.user = userInfo.data;
-  //console.log(userInfo.data.downloads);
-  //console.log(userInfo.data.uploads);
   $scope.$parent.activeTab = 1;
+  $scope.loading = false;
 
   //show library on load
   $http.post('api/presets/getUserDownloads', {
@@ -10,7 +9,6 @@ angular.module('scotchTodo').controller('libraryController', function ($scope, $
   })
     .success(function(presets) {
       $scope.searchedPresets = presets;
-      console.log(presets);
     })
     .error(function(data) {
       console.log('Error: ' + data);
@@ -20,12 +18,13 @@ angular.module('scotchTodo').controller('libraryController', function ($scope, $
     // used in library and search views
   $scope.updateLibraryResults = function(userName, presetName, tags, fileType) {
 
+    $scope.loading = true;
+
     if (userName) {
       // get all presets with the username from the users presets
       $http.get('api/users/search/' + userName)
         .success(function(users) {
           $scope.searchedPresets = [];
-          console.log(users);
 
           users.forEach(function(user) {
             $http.post('/api/presets/searchByUser/', {
@@ -34,7 +33,8 @@ angular.module('scotchTodo').controller('libraryController', function ($scope, $
             })
               .success(function(presets) {
                 $scope.searchedPresets = $scope.searchedPresets.concat(presets);
-                console.log(presets);
+                mixpanel.track("Searched by name");
+                $scope.loading = false;
               })
               .error(function(data) {
                 console.log('Error: ' + data);
@@ -51,7 +51,8 @@ angular.module('scotchTodo').controller('libraryController', function ($scope, $
       })
         .success(function(presets) {
           $scope.searchedPresets = presets;
-          //console.log(users);
+          mixpanel.track("Searched by preset");
+          $scope.loading = false;
         })
         .error(function(data) {
           console.log('Error: ' + data);
@@ -63,11 +64,14 @@ angular.module('scotchTodo').controller('libraryController', function ($scope, $
       })
         .success(function(presets) {
           $scope.searchedPresets = presets;
-          //console.log(users);
+          mixpanel.track("Searched by tags");
+          $scope.loading = false;
         })
         .error(function(data) {
           console.log('Error: ' + data);
         });
+    } else {
+      $scope.loading = false;
     }
   }
 });

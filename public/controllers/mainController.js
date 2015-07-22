@@ -1,18 +1,23 @@
-var spotlightTracks = ['191683919'];
-
 angular.module('scotchTodo').controller('mainController', function mainController($scope, $http, $location) {
   $scope.formData = {};
   $scope.searchOption = 1;
   $scope.user = {};
   $scope.activeTab = 0;
+  $scope.adCycle = 0;
 
-  // this section for getting the total count
-  // $scope.presetCount = 0;
+  var userOfTheDay = {
+    trackId: '191683919',
+    userId: '55aaf406e21d26b74c000002',
+    collab: true
+  }
 
-  // $http.get('/api/presets/total')
-  // .success(function(data) {
-  //   $scope.presetCount = data.count;
-  // });
+  $http.get('/api/presets/count')
+  .success(function(data) {
+    $scope.presetCount = data.count;
+  })
+  .error(function(err){
+    console.log(err);
+  })
 
   $scope.goTo = function (path) {
     $location.path(path);
@@ -31,7 +36,6 @@ angular.module('scotchTodo').controller('mainController', function mainControlle
       .success(function() {
         $scope.user = {};
         $scope.goTo('/login');
-        console.log('logged out!');
       })
       .error(function(data) {
         console.log('Error: ' + data);
@@ -45,7 +49,7 @@ angular.module('scotchTodo').controller('mainController', function mainControlle
         presetId: presetId
       })
       .success(function(preset) {
-        console.log('Preset saved to users library');
+
       })
       .error(function(data) {
         console.log('Error: ' + data);
@@ -57,14 +61,15 @@ angular.module('scotchTodo').controller('mainController', function mainControlle
         _id: presetId
       })
       .success(function(){
-        console.log('preset downloaded');
+        mixpanel.track("Preset downloaded");
       })
       .error(function (){
         console.log('preset download post failed')
       })
   }
 
-  //Soundcloud controller logic
+  // TODO: add this to a service
+  //####### Soundcloud controller logic ###############
   $scope.track = {};
   $scope.playing = false;
   $scope.clicked = false;
@@ -73,27 +78,27 @@ angular.module('scotchTodo').controller('mainController', function mainControlle
     client_id: '2dea4d7cb59c9f86f7b9c2d8744ade69'
   });
 
-  SC.get('/tracks/191683919', function(data, err) {
+  SC.get('/tracks/' + userOfTheDay.trackId, function(data, err) {
     $scope.$apply(function() {
-      console.log(data);
+
+      var fullUserImage = data.user.avatar_url.replace('large', 't500x500'); // gets full res
+
       $scope.artist = {
-        _id: '559f720a54819dc12800002c',
+        _id: userOfTheDay.userId, // use for presetbay profile
         albumArt: data.artwork_url,
         name: data.user.username,
         trackTitle: data.title,
-        image: data.user.avatar_url,
-        tour: true,
-        collab: true
+        image: fullUserImage,
+        collab: userOfTheDay.collab
       }
     })
   })
 
-  SC.stream('/tracks/191683919', function(track) {
-    $scope.track = track;
-  })
-
   $scope.play = function () {
-    $scope.track.play();
+    SC.stream('/tracks/' + userOfTheDay.trackId, function(track) {
+      $scope.track = track;
+      $scope.track.play();
+    })
     $scope.clicked = true;
     $scope.playing = true;
   }

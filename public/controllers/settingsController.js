@@ -15,7 +15,7 @@ angular.module('scotchTodo').controller('settingsController', function ($scope, 
       info: $scope.userDiscription
     })
     .success(function () {
-      console.log('successfully update info')
+      mixpanel.track("User updated info");
     })
     .error(function(err){
       console.log(err);
@@ -33,7 +33,7 @@ angular.module('scotchTodo').controller('settingsController', function ($scope, 
       link: linkObj
     })
     .success(function () {
-      console.log('successfully update info')
+      mixpanel.track("User added link");
       $scope.newLinkTitle = '';
       $scope.newAddressUrl = '';
     })
@@ -51,7 +51,7 @@ angular.module('scotchTodo').controller('settingsController', function ($scope, 
       link: linkObj
     })
     .success(function () {
-      console.log('successfully deleted link')
+      mixpanel.track("User deleted link");
     })
     .error(function(err){
       console.log(err);

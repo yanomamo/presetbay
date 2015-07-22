@@ -3,13 +3,14 @@ html(ng-app="scotchTodo")
     title!= title
     link(rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css")
     link(rel="stylesheet" type="text/css" href="style.css")
+    // Uncomment when live
     script(src='googleAnalytics.js')
-    //script(src='tawk.js')
+    script(src='mixpanel.js')
+    script(src='tawk.js')
     script(src='//connect.soundcloud.com/sdk.js')
     script(src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js")
     script(src="//ajax.googleapis.com/ajax/libs/angularjs/1.0.8/angular.min.js")
     script(src="core.js")
-    //script(src='services/soundcloudService.js')
     script(src='directives/searchDirective.js')
     script(src='controllers/mainController.js')
     script(src='controllers/loginController.js')
@@ -22,7 +23,7 @@ html(ng-app="scotchTodo")
     #app-container
       ul#container-tabs.nav.nav-tabs
         li.search-tab(ng-class='getTabClass(0)' ng-click='activeTab = 0')
-          a.tab(ng-class='getHighlight(0)' ng-click='goTo("/search")') Search
+          a.tab(ng-class='getHighlight(0)' ng-click='goTo("/search")') Search {{presetCount}} presets
         li.library-tab(ng-class='getTabClass(1)' ng-click='activeTab = 1')
           a.tab(ng-class='getHighlight(1)' ng-click='goTo("/library")' ng-show='user.username') Library
           a.tab(ng-class='getHighlight(1)' ng-click='goTo("/login")' ng-show='!user.username') Login or Sign Up!
@@ -34,23 +35,30 @@ html(ng-app="scotchTodo")
       #view(ng-view)
 
     .left-bubble.bubble
-      h4 Track of the Day
+      h4 User of the Day
       .playback-control-container
         img.graphic(ng-src='{{artist.image}}' ng-mouseenter='hovering=true')
         .controls(ng-show='hovering || !clicked' ng-mouseleave='hovering=false')
           .center
             span.control-button.glyphicon.glyphicon-play-circle(ng-show='!clicked || !playing' ng-click='play()')
             span.control-button.glyphicon.glyphicon-stop(ng-show='playing' ng-click='stop()')
+      h6 Artist name - 
+      h2 {{artist.name}}
+      h6 Track title - 
+      h2 {{artist.trackTitle}}
+      .border
+      h5(ng-show='artist.collab') Looking to collab? Contact artist:
+      .info.btn.btn-info(ng-click='goTo("/profile/"+artist._id)')
+        span.glyphicon.glyphicon-envelope
+      .border
+      h5 Want <strong>your</strong> work here? Find how:
+      a.info.btn.btn-info(href='/faq')
+        span.glyphicon.glyphicon-question-sign
 
-    .right-bubble.bubble
-      img.graphic(src='https://avatars2.githubusercontent.com/u/4551618?v=3&s=200')
-      h4 Ad
+    //include ./ad.jade
+    //include ./note.jade
+    #faq
+      a(href='/faq') About PresetBay
+    #news
+      h4 Luke: Hello Reddit! Welcome!!
 
-    #footer-container
-      h4 {{artist.name}} - {{artist.trackTitle}} |
-      h4(ng-show='artist.collab') | Looking to collaborate |
-      h4(ng-show='artist.tour') | Looking to tour |
-      .info.btn.btn-info(ng-click='goTo("/profile/"+artist._id)') See artist info
-
-      //img(ng-src='{{albumArt}}')
-      //span.glyphicon.glyphicon-play(ng-click='play()' ng-show='track' style='color:#fff')

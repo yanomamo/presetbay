@@ -11,26 +11,37 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var session = require('express-session');
 var MongoStore = require('connect-mongo')(session);
+var favicon = require('serve-favicon');
+//var minify = require('express-minify');
 
 var templates = require('./routes/templates');
 var presets = require('./routes/presets');
 var users = require('./routes/users');
+var vote = require('./routes/vote');
 
-// configure the database
-// mongodb://yanomamo:blackbelt@ds047752.mongolab.com:47752/presetbaydb
+// switch when live
+// mongoose.connect(mongodb://yanomamo:blackbelt@ds047752.mongolab.com:47752/presetbaydb);
 mongoose.connect('mongodb://127.0.0.1/mydb');     // connect to mongoDB database on modulus.io
 
-// compile less file
+// compile main less file
 less.render(fs.readFileSync("./public/style.less").toString(), {
   filename: path.resolve("./public/style.less")
 }, function(e, output) {
   fs.writeFileSync("./public/style.css", output.css, 'utf8');
 });
 
+// compile faq less file
+less.render(fs.readFileSync("./public/stylefaq.less").toString(), {
+  filename: path.resolve("./public/stylefaq.less")
+}, function(e, output) {
+  fs.writeFileSync("./public/faq/stylefaq.css", output.css, 'utf8');
+});
+
 // set apps
 app.set('views', './views')
 app.set('view engine', 'jade')
 app.use(express.static(__dirname + '/public'));                 // set the static files location /public/img will be /img for users
+app.use(favicon(__dirname + '/public/images/favicon.ico'));
 app.use(morgan('dev'));                                         // log every request to the console
 app.use(bodyParser.urlencoded({'extended':'true'}));            // parse application/x-www-form-urlencoded
 app.use(bodyParser.json());                                     // parse application/json
@@ -44,11 +55,13 @@ app.use(session({
     //rolling: true, // updates from db upon each request
     //resave: true,
 }));
+//app.use(minify());
 app.use(methodOverride());
 
 app.use('/', templates);
 app.use('/api/presets', presets);
 app.use('/api/users', users);
+app.use('/api/vote', vote);
 
 // listen (start app with node server.js) ======================================
 app.listen(8080);

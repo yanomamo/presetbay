@@ -13,7 +13,8 @@
         a Info
   #profile-info
     .profile-data(ng-show='profileView == 0')
-      .data
+      img.gear-loader(src='/images/gears.gif' ng-show='loading')
+      .data(ng-show='presets')
         table.table.table-striped.table-hover.user-table
           thead
             tr

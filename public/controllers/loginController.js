@@ -12,6 +12,7 @@ angular.module('scotchTodo').controller('loginController', function ($scope, $ht
         if (data.username) {
           $scope.user = data;
           $scope.goTo('/library');
+          mixpanel.track("User logged in");
         } else {
           console.log(data.error);
         }
@@ -30,6 +31,7 @@ angular.module('scotchTodo').controller('loginController', function ($scope, $ht
         if (data.username) {
           $scope.user = data;
           $scope.goTo('/library');
+          mixpanel.track("User created");
         } else {
           console.log(data.error);
         }

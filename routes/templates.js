@@ -16,4 +16,8 @@ router.get('/directives/:filename', function(req, res){
   res.render("directives/" + filename);
 });
 
+router.get('/faq', function(req, res) {
+  res.render('faq', {title: 'PB - FAQ'})
+})
+
 module.exports = router;

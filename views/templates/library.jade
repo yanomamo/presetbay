@@ -1,25 +1,22 @@
 ng-search(option='searchOption' update-results='updateLibraryResults(userName, presetName, tags, fileType)')
 .search-viewer
+  img.gear-loader(src='/images/gears.gif' ng-show='loading')
   table.table.table-striped.table-hover.user-table(ng-show='searchedPresets')
     thead
       tr
-        th Name
-        th Type
-        th Tags
-        th 
-        th 
-        th Author
-        th #DLd
-        th DL
+        th.name Name
+        th.type Type
+        th.tags Tags
+        th.author Author
+        th.dlC #DL
+        th.dllink DL
     tbody
       tr.result-container(ng-repeat='preset in searchedPresets')
-        td {{preset.name}}
-        td {{preset.fileType}}
-        td {{preset.tags[0]}}
-        td {{preset.tags[1]}}
-        td {{preset.tags[2]}}
-        td(ng-click='goTo("/profile/"+preset.owner)') {{preset.ownerName}}
-        td {{preset.downloadCount}}
-        td 
+        td.name {{preset.name}}
+        td.type {{preset.fileType}}
+        td.tags {{preset.tags[0]}} {{preset.tags[1]}} {{preset.tags[2]}}
+        td.author(ng-click='goTo("/profile/"+preset.owner)') {{preset.ownerName}}
+        td.dlC {{preset.downloadCount}}
+        td.dllink
           a.link(download='{{ preset.name }}{{ preset.fileType }}' href="data:nmsv;base64,{{ preset.fileBase64 }}" ng-click='savePresetToUser(preset._id, user._id); preset.downloadCount = preset.downloadCount + 1')
             span.glyphicon.glyphicon-circle-arrow-down.top

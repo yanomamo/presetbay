@@ -13,11 +13,6 @@ angular.module('scotchTodo').controller('uploadController', function ($scope, $h
     var userId;
     var ownerName;
 
-    // if (files.length > 100) {
-    //   alert('Sorry, you can only upload up to 100 files at once. Please select fewer files and try again!');
-    //   return;
-    // }
-
     if ($scope.user.username) {
       userId = $scope.user._id;
       ownerName = $scope.user.username;
@@ -51,11 +46,11 @@ angular.module('scotchTodo').controller('uploadController', function ($scope, $h
             })
               .success(function(data) {
                 presetIds.push(data._id);
-                console.log(data);
 
                 uploadCount++;
                 $scope.currentFileUploading = n + e;
                 $scope.uploadProgress = 'Uploaded ' + uploadCount.toString() + ' of ' + files.length.toString();
+                mixpanel.track("Preset uploaded");
               })
               .error(function(data) {
                 console.log('Error: ' + data);
@@ -74,7 +69,7 @@ angular.module('scotchTodo').controller('uploadController', function ($scope, $h
               presetIds: presetIds
             })
               .success(function(data) {
-                //console.log(data); no data to print
+                
               })
               .error(function(data) {
                 console.log('Error: ' + data);

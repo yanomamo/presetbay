@@ -24,7 +24,6 @@ function updateSessionUser(id, callback) {
   }, function(err, user) {
     if (err)
       console.log(err);
-    console.log('update session returning -v');
     callback(user);
   });
 }
@@ -44,15 +43,6 @@ router.get('/searchId/:id', function (req, res) {
 
 router.get('/search/:username', function (req, res) {
   var name = req.params.username;
-
-  // Users.find({
-  //   username: new RegExp(name, "i")
-  // }, function(err, users) {
-
-  //   if (err)
-  //     res.send(err)
-  //   res.send(users);
-  // }).limit(userReturnLimit);
 
   Users
   .find({
@@ -106,7 +96,6 @@ router.post('/updateDownloads', function(req, res) {
 
     // anytime the user is updated, the session user must reflect that change
     if (req.session.user){
-      console.log('updating donwloads');
       updateSessionUser(req.session.user._id, function(user) {
         req.session.user = user;
         res.send({});
@@ -135,7 +124,6 @@ router.post('/updateUploads', function (req, res) {
 
     // anytime the user is updated, the session user must reflect that change
     if (req.session.user){
-      console.log('updating uploads');
       updateSessionUser(req.session.user._id, function(user) {
         req.session.user = user;
         res.send({});
@@ -161,7 +149,6 @@ router.post('/updateDescription', function (req, res) {
 
     // anytime the user is updated, the session user must reflect that change
     if (req.session.user){
-      console.log('updating uploads');
       updateSessionUser(req.session.user._id, function(user) {
         req.session.user = user;
         res.send({});
@@ -190,7 +177,6 @@ router.post('/updateLink', function (req, res) {
 
     // anytime the user is updated, the session user must reflect that change
     if (req.session.user){
-      console.log('updating uploads');
       updateSessionUser(req.session.user._id, function(user) {
         req.session.user = user;
         res.send({});
@@ -212,7 +198,6 @@ router.post('/deleteLink', function (req, res) {
       'info.links': link
     }
   }, function(err, num) {
-    console.log(num);
 
     if (err){
       console.log(err);
@@ -220,7 +205,6 @@ router.post('/deleteLink', function (req, res) {
 
     // anytime the user is updated, the session user must reflect that change
     if (req.session.user){
-      console.log('updating uploads');
       updateSessionUser(req.session.user._id, function(user) {
         req.session.user = user;
         res.send({});
