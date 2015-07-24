@@ -6,15 +6,17 @@ body {
   min-width: 980px;
   display: flex;
   display: -webkit-flex;
-  -webkit-align-items: center;
-  align-items: center;
   -webkit-justify-content: center;
   justify-content: center;
+}
+body #logo {
+  position: absolute;
 }
 body #app-container {
   z-index: 2;
   width: 480px;
-  height: 470px;
+  height: calc(100% - 175px);
+  margin: 150px 0 25px 0;
   position: relative;
   background-color: #ffffff;
   border-radius: 4px;
@@ -43,8 +45,8 @@ body #app-container #container-tabs .highlighted {
   color: #fff;
 }
 body #app-container #view {
-  height: 422px;
   width: 100%;
+  height: calc(100% - 42px);
 }
 #search-container {
   height: 34px;
@@ -98,7 +100,7 @@ body #app-container #view {
   margin-bottom: 10px;
 }
 .search-viewer {
-  height: 394px;
+  height: calc(100% - 34px);
   width: 100%;
   overflow-y: scroll;
 }
@@ -209,10 +211,10 @@ table {
 }
 #profile-container #profile-info {
   overflow-y: scroll;
-  height: 392px;
+  height: calc(100% - 42px);
 }
 #profile-container #profile-info .profile-data {
-  height: 392px;
+  height: 100%;
   width: 100%;
 }
 #profile-container #profile-info .info {

@@ -20,6 +20,7 @@ html(ng-app="scotchTodo")
     script(src='controllers/uploadController.js')
     script(src='controllers/profileController.js')
   body(ng-controller="mainController")
+    img#logo(src='/images/logo.png')
     #app-container
       ul#container-tabs.nav.nav-tabs
         li.search-tab(ng-class='getTabClass(0)' ng-click='activeTab = 0')
