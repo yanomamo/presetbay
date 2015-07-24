@@ -14,7 +14,7 @@
     input.checkbox(type="checkbox" ng-model='checked')
     label I agree that I am the original creator of the presets I am uploading. I am not uploading any content that I do not own. I am not giving away someone elses work (cause that'd be pretty lame).
   .small.upload-section.button
-    input#file-upload(type='file' ng-disabled='!checked || (!tags[1] || !tags[0] || !tags[2])' multiple accept='.nmsv')
+    input#file-upload(type='file' ng-disabled='!checked || (!tags[1] || !tags[0] || !tags[2])' multiple accept='.nmsv, .fxp')
   .small.upload-section.read-out
     h3 {{ currentFileUploading }}
     p {{ uploadProgress }}

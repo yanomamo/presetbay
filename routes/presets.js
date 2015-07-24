@@ -14,12 +14,46 @@ var Presets = mongoose.model('Presets', {
 });
 
 // get presets by name
-router.get('/name/:preset_name', function (req, res) {
-  var name = req.params.preset_name;
+router.get('/all/:app', function (req, res) {
+
+  var app = req.params.app;
+
+  if (app == 'Massive') {
+    var type = '.nmsv';
+  } else {
+    var type = '.fxp';
+  }
 
   Presets
   .find({
-    name: new RegExp(name, "i")
+    fileType: type
+  })
+  .sort({
+    downloadCount: 'desc'
+  })
+  .limit(presetReturnLimit)
+  .exec(function(err, presets) {
+    if (err)
+      res.send(err)
+
+    res.send(presets);
+  });
+});
+
+router.post('/name', function (req, res) {
+  var name = req.body.name;
+  var app = req.body.app;
+
+  if (app == 'Massive') {
+    var type = '.nmsv';
+  } else {
+    var type = '.fxp';
+  }
+
+  Presets
+  .find({
+    name: new RegExp(name, "i"),
+    fileType: type
   })
   .sort({
     name: 'asc'
@@ -35,11 +69,22 @@ router.get('/name/:preset_name', function (req, res) {
 
 // get presets by name
 router.post('/tags', function(req, res) {
+
+  var app = req.body.app;
+
+  if (app == 'Massive') {
+    var type = '.nmsv';
+  } else {
+    var type = '.fxp';
+  }
+
+  // for library UPDATE
   if (req.body.ids) {
     Presets
     .find({
       tags: { $in : req.body.tags },
-      _id: {$in : req.body.ids}
+      _id: {$in : req.body.ids},
+      fileType: type
     })
     .sort({
       name: 'asc'
@@ -53,9 +98,12 @@ router.post('/tags', function(req, res) {
     });
 
   } else {
+
+    // for search
     Presets
     .find({
-      tags: { $in : req.body.tags }
+      tags: { $in : req.body.tags },
+      fileType: type
     })
     .sort({
       name: 'asc'
@@ -87,9 +135,9 @@ router.post('/getUserDownloads', function (req, res) {
 router.post('/', function(req, res) {
 
   // too big to be an nmsv file... This doesnt work though :P
-  if (req.body.file.length > 6000) {
-    res.status(404).send("That file was too big to be a preset");
-  }
+  // if (req.body.file.length > 6000) {
+  //   res.status(404).send("That file was too big to be a preset");
+  // }
 
   Presets.create({
     name: req.body.name,
@@ -147,10 +195,20 @@ router.post('/downloaded', function (req, res) {
 });
 
 router.post('/query', function (req, res) {
+
+  var app = req.body.app;
+
+  if (app == 'Massive') {
+    var type = '.nmsv';
+  } else {
+    var type = '.fxp';
+  }
+
   Presets
   .find({
     _id: {$in: req.body.ids},
-    name: new RegExp(req.body.name, "i")
+    name: new RegExp(req.body.name, "i"),
+    fileType: type
   })
   .sort({
     name: 'asc'

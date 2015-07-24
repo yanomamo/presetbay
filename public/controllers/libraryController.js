@@ -47,7 +47,8 @@ angular.module('scotchTodo').controller('libraryController', function ($scope, $
     } else if (presetName && fileType) {
       $http.post('api/presets/query', {
         ids: $scope.user.downloads,
-        name: presetName
+        name: presetName,
+        app: fileType.name
       })
         .success(function(presets) {
           $scope.searchedPresets = presets;
@@ -60,7 +61,8 @@ angular.module('scotchTodo').controller('libraryController', function ($scope, $
     } else if (tags && fileType) {
       $http.post('api/presets/tags', {
         ids: $scope.user.downloads,
-        tags: tags
+        tags: tags,
+        app: fileType.name
       })
         .success(function(presets) {
           $scope.searchedPresets = presets;

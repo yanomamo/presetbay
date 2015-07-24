@@ -41,6 +41,22 @@ router.get('/searchId/:id', function (req, res) {
   });
 });
 
+router.get('/all', function (req, res) {
+  Users
+  .find({})
+  .sort({
+    username: 'asc'
+  })
+  .limit(userReturnLimit)
+  .exec(function(err, users) {
+    if (err)
+      res.send(err)
+
+    res.send(users);
+  });
+
+});
+
 router.get('/search/:username', function (req, res) {
   var name = req.params.username;
 

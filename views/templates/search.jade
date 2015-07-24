@@ -1,4 +1,4 @@
-ng-search(option='searchOption' update-results='updateSearchResults(userName, presetName, tags, fileType)')
+ng-search(option='searchOption' update-results='updateSearchResults(userName, presetName, tags, fileType, option)')
 img.gear-loader(src='/images/gears.gif' ng-show='loading')
 .search-viewer(ng-show='searchOption == 0')
   table.table.table-striped.table-hover(ng-show='searchedUsers')
@@ -17,7 +17,7 @@ img.gear-loader(src='/images/gears.gif' ng-show='loading')
     thead
       tr
         th.name Name
-        th.type Type
+        th.type App
         th.tags Tags
         th.author Author
         th.dlC #DL
@@ -25,7 +25,7 @@ img.gear-loader(src='/images/gears.gif' ng-show='loading')
     tbody
       tr.result-container(ng-repeat='preset in searchedPresets')
         td.name {{preset.name}}
-        td.type {{preset.fileType}}
+        td.type {{getApplication(preset.fileType)}}
         td.tags {{preset.tags[0]}} {{preset.tags[1]}} {{preset.tags[2]}}
         td.author(ng-click='goTo("/profile/"+preset.owner)') {{preset.ownerName}}
         td.dlC {{preset.downloadCount}}

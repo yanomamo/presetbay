@@ -3,13 +3,76 @@ angular.module('scotchTodo').controller('searchController', function ($scope, $h
   $scope.$parent.activeTab = 0;
   $scope.loading = false;
   
-  //$scope.searchedUsers = [];
+  $http.get('/api/presets/all/Massive')
+  .success(function(data) {
+    $scope.searchedPresets = data;
+    $scope.loading = false;
+  })
+  .error(function(data) {
+    console.log('Error: ' + data);
+  });
+
+  $http.get('/api/users/all')
+    .success(function(data) {
+      $scope.searchedUsers = data;
+      $scope.loading = false;
+    })
+    .error(function(data) {
+      console.log('Error: ' + data);
+    });
+
   // used in library and search views
-  $scope.updateSearchResults = function(userName, presetName, tags, fileType) {
+  $scope.updateSearchResults = function(userName, presetName, tags, fileType, option) {
     // delete current
     $scope.loading = true;
     $scope.searchedUsers = [];
     $scope.searchedPresets = [];
+
+    if (option){
+      if (option.user) {
+        $http.get('/api/users/all')
+          .success(function(data) {
+            $scope.searchedUsers = data;
+            $scope.loading = false;
+          })
+          .error(function(data) {
+            console.log('Error: ' + data);
+          });
+        } else if (option.patch) {
+          $http.get('/api/presets/all/' + option.patch.name)
+            .success(function(data) {
+              $scope.searchedPresets = data;
+              $scope.loading = false;
+            })
+            .error(function(data) {
+              console.log('Error: ' + data);
+            });
+        }
+
+      if (option.name) {
+        $http.get('/api/presets/all/' + option.name)
+          .success(function(data) {
+            $scope.searchedPresets = data;
+            $scope.loading = false;
+          })
+          .error(function(data) {
+            console.log('Error: ' + data);
+          });
+
+        if (option.refreshUsers == 0) {
+          $http.get('/api/users/all')
+            .success(function(data) {
+              $scope.searchedUsers = data;
+              $scope.loading = false;
+            })
+            .error(function(data) {
+              console.log('Error: ' + data);
+            });
+        }
+
+        return;
+      }
+    }
 
     if (userName) {
       $http.get('/api/users/search/' + userName)
@@ -22,7 +85,10 @@ angular.module('scotchTodo').controller('searchController', function ($scope, $h
           console.log('Error: ' + data);
         });
     } else if (presetName && fileType) {
-      $http.get('/api/presets/name/' + presetName)
+      $http.post('/api/presets/name/', {
+         name: presetName,
+         app: fileType.name
+      })
         .success(function(data) {
           mixpanel.track("Searched by preset");
           $scope.searchedPresets = data;
@@ -33,7 +99,8 @@ angular.module('scotchTodo').controller('searchController', function ($scope, $h
         });
     } else if (tags && fileType) {
       $http.post('/api/presets/tags', {
-        tags: tags
+        tags: tags,
+        app: fileType.name
       })
         .success(function(data) {
           $scope.searchedPresets = data;

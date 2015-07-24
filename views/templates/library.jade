@@ -1,11 +1,11 @@
-ng-search(option='searchOption' update-results='updateLibraryResults(userName, presetName, tags, fileType)')
+ng-search(option='searchOption' update-results='updateLibraryResults(userName, presetName, tags, fileType, option)')
 .search-viewer
   img.gear-loader(src='/images/gears.gif' ng-show='loading')
   table.table.table-striped.table-hover.user-table(ng-show='searchedPresets')
     thead
       tr
         th.name Name
-        th.type Type
+        th.type App
         th.tags Tags
         th.author Author
         th.dlC #DL
@@ -13,7 +13,7 @@ ng-search(option='searchOption' update-results='updateLibraryResults(userName, p
     tbody
       tr.result-container(ng-repeat='preset in searchedPresets')
         td.name {{preset.name}}
-        td.type {{preset.fileType}}
+        td.type {{getApplication(preset.fileType)}}
         td.tags {{preset.tags[0]}} {{preset.tags[1]}} {{preset.tags[2]}}
         td.author(ng-click='goTo("/profile/"+preset.owner)') {{preset.ownerName}}
         td.dlC {{preset.downloadCount}}

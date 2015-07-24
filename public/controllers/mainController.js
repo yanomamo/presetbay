@@ -6,8 +6,8 @@ angular.module('scotchTodo').controller('mainController', function mainControlle
   $scope.adCycle = 0;
 
   var userOfTheDay = {
-    trackId: '191683919',
-    userId: '55aaf406e21d26b74c000002',
+    trackId: '208875038',//'191683919',
+    userId: '55b03dfd3ceba86075000004',//'55aaf406e21d26b74c000002',
     collab: true
   }
 
@@ -18,6 +18,15 @@ angular.module('scotchTodo').controller('mainController', function mainControlle
   .error(function(err){
     console.log(err);
   })
+
+  //temporary!
+  $scope.getApplication = function(ext) {
+    if(ext == '.nmsv') {
+      return 'Massive';
+    } else {
+      return 'Sylenth1'
+    }
+  }
 
   $scope.goTo = function (path) {
     $location.path(path);

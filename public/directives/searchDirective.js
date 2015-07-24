@@ -8,7 +8,7 @@ angular.module('scotchTodo').directive('ngSearch', function() {
       updateResults: '&'
     },
     link: function(scope) {
-      scope.types = [{name: 'nmsv'}];
+      scope.types = [{name: 'Massive'}, {name: 'Sylenth1'}];
       scope.fileTypeSelection = scope.types[0];
 
       scope.setOption = function (x) {

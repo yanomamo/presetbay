@@ -1,18 +1,19 @@
 #search-container
   .search-area(ng-show='showOption(0)')
     form.form-inline(ng-submit='updateResults({userName: userNameInput})')
-      input.form-control.user-search(type='text' placeholder='Enter author name' ng-model='userNameInput')
+      input.form-control.user-search(type='text' placeholder='Enter author name + hit enter' ng-model='userNameInput')
   .search-area(ng-show='showOption(1)')
     form.form-inline(ng-submit='updateResults({presetName: presetNameInput, fileType: fileTypeSelection})')
-      input.form-control.preset-search(type='text' placeholder='Enter preset name' ng-model='presetNameInput')
+      input.form-control.preset-search(type='text' placeholder='Enter preset name + hit enter' ng-model='presetNameInput')
   .search-area(ng-show='showOption(2)')
     form.form-inline(ng-submit='updateResults({tags: [tag1, tag2, tag3], fileType: fileTypeSelection})')
       input.form-control.preset-tag(type='text' placeholder='tag 1' ng-model='tag1')
       input.form-control.preset-tag(type='text' placeholder='tag 2' ng-model='tag2')
       input.form-control.preset-tag(type='text' placeholder='tag 3' ng-model='tag3')
       input.hidden-submit(type="submit")
-  select.form-control(ng-model='fileTypeSelection' ng-options="type.name for type in types")
+  select.form-control(ng-model='fileTypeSelection' ng-options="type.name for type in types" ng-change='updateResults({option: {name: fileTypeSelection.name, refreshUsers: option}})')
+    option(value="choose" disabled selected)
   .option-select.btn-group.btn-group-justified
-    .btn.btn-primary(ng-click='setOption(0)' ng-class='getClass(0)') user
-    .btn.btn-primary(ng-click='setOption(1)' ng-class='getClass(1)') patch
+    .btn.btn-primary(ng-click='setOption(0); updateResults({option: {user: "poop"}})' ng-class='getClass(0)') user
+    .btn.btn-primary(ng-click='setOption(1); updateResults({option: {patch: fileTypeSelection}})' ng-class='getClass(1)') patch
     .btn.btn-primary(ng-click='setOption(2)' ng-class='getClass(2)') tags
